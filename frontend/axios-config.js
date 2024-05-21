@@ -6,7 +6,8 @@ const instance = axios.create({
   timeout: 5000, 
   headers: {
     'Content-Type': 'multipart/form-data', 
-    'Accept': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
   }
 });
 
