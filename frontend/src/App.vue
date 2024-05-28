@@ -1,24 +1,30 @@
 <template>
-  <header class="header" v-if="myStore.isLoggedIn">
-     <nav class="nav">
-       <router-link class="link" to="/">Dashboard</router-link>
-       <!-- <router-link class="link" to="/enroll">Enroll</router-link>
-       <router-link class="link" to="/bulk">Bulk-Enroll</router-link>
-       <router-link class="link" to="/students">Students</router-link> -->
-       <router-link class="logout" to="#" @click="logout">Logout</router-link>
-     </nav>
-  </header>
-  <br> <br>
- <router-view></router-view>
+<div>
+  <div v-if="myStore.isLoggedIn">
+    <Header @my_event="logout" :user_display="user_dis"/>
+  </div>
+    
+    <br> <br>
+  <router-view @pass_user_display="user_display_handler"></router-view>
+
+</div>
 </template>
 
+
+
 <script setup>
+import Header from './components/Header.vue'
 import {useUserStore} from '@/stores/user'
 import { useRouter } from 'vue-router'
 import axios from '../axios-config.js'
+import { onMounted } from 'vue';
 
 const router = useRouter()
 const myStore = useUserStore()
+var user_dis;
+
+
+
 
 const logout = ()=>{
 
@@ -38,51 +44,24 @@ const logout = ()=>{
    }).catch((error)=>{
      console.log(error)
    })
+
 }
 
+
+const user_display_handler = (user) =>{
+
+  user_dis = user
+
+}
+
+// const onMountHandler = () => {
+  
+//   if
+// };
+
+// onMounted(onMountHandler);
 </script>
 
 <style scoped>
-.header{
- border:1px solid var(--main);
- position:fixed;
- top:0;
- left:0;
- padding:10px;
- width: 100vw;
- height: auto;
- background-color: var(--main);
- box-shadow: 0 0 3.5px 0 rgba(0, 0, 0, 0.3);
- z-index: 3;
-}
-.nav{
- display: flex;
- width: 95vw;
-}
-.nav .link{
- text-decoration: none;
- color:#000;
- font-size: 20px;
- margin:5px;
- padding:5px 10px 5px 10px;
- border-radius: 5px;
-}
-.nav .link:hover{
- background-color: var(--secondary);
- color:#fff;
-}
-.nav .link.router-link-exact-active {
- background-color: var(--secondary);
- color:#fff;
-}
-.nav .logout{
- text-decoration: none;
- color:#000;
- font-size: 20px;
- margin:5px 5px 5px auto;
- padding:5px 10px 5px 10px;
- border-radius: 5px;
- background-color: var(--secondary);
- color:#fff;
-}
+
 </style>

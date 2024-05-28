@@ -1,28 +1,29 @@
 <template>
-    <div class="main-container">
-      <div class="login-container">
-           <h2>Login</h2>
-          <form class="login-form" @submit="login">
-              <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" v-model="username"  required>
-              </div>
-              <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" v-model="password"  required>
-              </div>
-                <div class="form-group">
-                <button type="submit">{{ buttonName }}</button>
-              </div>
-          </form>
-            <div class="register-link">
-                <p>Don't have an account? <router-link to="/register">Register here</router-link></p>
+  <div class="main-container">
+    <div class="login-container">
+         <h2>Login</h2>
+        <form class="login-form" @submit="login">
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" id="username" v-model="username"  required>
             </div>
-      </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" v-model="password"  required>
+            </div>
+              <div class="form-group">
+              <button type="submit">{{ buttonName }}</button>
+            </div>
+        </form>
+          <div class="register-link">
+              <p>Don't have an account? <router-link to="/register">Register here</router-link></p>
+          </div>
     </div>
+  </div>
 </template>
 
 <script setup>
+import { getCurrentInstance } from 'vue'
 import axios from '../../axios-config.js'
 import {ref,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
@@ -36,25 +37,27 @@ const password = ref('')
 const buttonName= ref('Login')
 const router = useRouter()
 
+const instance = getCurrentInstance()
+
 
 
 const login = (e)=>{
 e.preventDefault();
 buttonName.value="Logging In..."
 axios.post('/login',{
-  username:username.value,
-  password:password.value
+username:username.value,
+password:password.value
 }).then((res)=>{
-  if(res.status===200){
-      buttonName.value="Login";
-      localStorage.setItem("token",res.data.token)
-      localStorage.setItem("isLoggedIn",true)
-      myStore.isLoggedIn = true;
-      router.push('/')
-  }
+if(res.status===200){
+    buttonName.value="Login";
+    localStorage.setItem("token",res.data.token)
+    localStorage.setItem("isLoggedIn",true)
+    myStore.isLoggedIn = true;
+    router.push('/')
+}
 }).catch((error)=>{
-  console.log(error)
-  buttonName.value="Login"
+console.log(error)
+buttonName.value="Login"
 })
 }
 onMounted(()=>{
@@ -118,16 +121,16 @@ background-color: #0056b3;
 }
 
 .register-link {
-  text-align: center;
-  margin-top: 15px;
+text-align: center;
+margin-top: 15px;
 }
 
 .register-link a {
-  color: #007bff;
-  text-decoration: none;
+color: #007bff;
+text-decoration: none;
 }
 
 .register-link a:hover {
-  text-decoration: underline;
+text-decoration: underline;
 }
 </style>

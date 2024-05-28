@@ -9,7 +9,31 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class UserController extends Controller
-{
+{   
+
+    public function get_auth_user(){
+
+        $user = Auth::user();
+        return response()->json([$user]);
+       
+    }
+
+    public function current_user_id(Request $request){
+      
+
+        $username = $request->input('username');
+
+        $user = User::where('username', $username)->first();
+
+        if ($user) {
+            return response()->json(['id' => $user->id]);
+            
+        } else {
+            echo "No user found with the username: " . $username;
+        }
+    }
+
+
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -28,6 +52,7 @@ class UserController extends Controller
                 'token' => $token,
                 'user' => $user,
                 ], 200);
+
         }else{
             return response()->json([
                 'token' => 'Token does not exist',

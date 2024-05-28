@@ -45,6 +45,7 @@
       buttonName.value = "Register"
     })
   }
+
   </script>
   
   <style lang="scss" scoped>
