@@ -7,6 +7,36 @@
         </div>
    
 
+       
+            
+        <div class = "type_box">
+            <!-- <textarea ref = "todo"> </textarea>  -->
+            <!-- <button v-on:click=" post_func"> ADD </button> -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form ref="todo">
+                      <div class="mb-3">
+                        <input ref="todo" class="form-control">
+                      </div>
+                      <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button v-on:click=" post_func" class="btn btn-primary">Add Task</button> -->
+                    <button v-on:click=" post_func"> ADD </button>
+                  </div>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+        </div>
+        
         <div class = "update_modal" v-if="ModalOpen">
             <h4 >  {{modal_todo}}   </h4>
             <textarea class = "modal field" ref = "newtodo" > </textarea> 
@@ -14,13 +44,6 @@
             <button v-on:click="modal_func()"> CANCEL </button>
 
         </div>
-            
-        <div class = "type_box">
-            <textarea ref = "todo"> </textarea> 
-            <button v-on:click=" post_func"> ADD </button>
-          
-        </div>
-    
     
     
         <div class = "task_box">
@@ -34,7 +57,7 @@
 
 
                     <button v-on:click="delete_func(item.id)"> delete </button> 
-                    <button v-on:click="() => {modal_func(); id_give_update(item.id, item.to_do)}"> update </button>
+                    <button v-if ="!item.status" v-on:click="() => {modal_func(); id_give_update(item.id, item.to_do)}"> update </button>
                     <button v-on:click="change_status(item.id)" v-if="item.status"> Undo {{ item.status }}</button>
                     <button v-on:click="change_status(item.id)" v-if ="!item.status"> Done {{ item.status }}</button>
                 
