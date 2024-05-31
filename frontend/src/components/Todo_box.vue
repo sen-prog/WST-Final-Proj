@@ -1,9 +1,11 @@
 <template>
-    <div class = "main_box">
-     
 
-     
-    </div>
+        <div class = "main_box">
+        
+
+        
+        </div>
+
 </template>
 
 <script>
@@ -11,6 +13,7 @@
 </script>
 
 <style scoped>
+
 .main_box{
     border: solid black;
     height: auto;
