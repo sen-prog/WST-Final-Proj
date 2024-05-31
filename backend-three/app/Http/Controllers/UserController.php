@@ -10,14 +10,6 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class UserController extends Controller
 {   
-
-    public function get_auth_user(){
-
-        $user = Auth::user();
-        return response()->json([$user]);
-       
-    }
-
     public function current_user_id(Request $request){
       
 

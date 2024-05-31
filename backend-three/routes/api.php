@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('todos', ToDoController::class);
 Route::patch('/change_status', [TodoController::class, 'change_status']);
+Route::get('/get_search', [TodoController::class, 'get_search']);
 
 
 Route::post('/current_user_id', [UserController::class, 'current_user_id']);

@@ -5,36 +5,17 @@
             <h1> TO DO LIST </h1>
 
         </div>
-   
-
+        
+        <div class = "search_box">
+        <textarea ref = "searchz"> </textarea>
+        <button v-on:click="get_all_todos">Search </button>
+        </div>
        
             
         <div class = "type_box">
-            <!-- <textarea ref = "todo"> </textarea>  -->
-            <!-- <button v-on:click=" post_func"> ADD </button> -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form ref="todo">
-                      <div class="mb-3">
-                        <input ref="todo" class="form-control">
-                      </div>
-                      <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <!-- <button v-on:click=" post_func" class="btn btn-primary">Add Task</button> -->
-                    <button v-on:click=" post_func"> ADD </button>
-                  </div>
-                    </form>
-                  </div>
-
-                </div>
-              </div>
-            </div>
+            <textarea ref = "todo"> </textarea>  
+            <button v-on:click=" post_func"> ADD </button>
+        
         </div>
         
         <div class = "update_modal" v-if="ModalOpen">
@@ -92,9 +73,7 @@
                 ModalOpen:false,
                 update_id: 0,
                 modal_todo: "",
-                
                
-                
             }
             
         },
@@ -197,14 +176,15 @@
 
             },
             get_all_todos(){
-                axios.get(`http://127.0.0.1:8000/api/todos/${this.user_id}`)
-                .then(response => {
-                this.todos = response.data[0];
-                // console.log( this.todos);
-                 })
-                .catch(error => {
-                 console.error('Error fetching todos:', error);
-                 });
+
+
+                axios.get(`http://127.0.0.1:8000/api/get_search?user_id=${this.user_id}&search=${this.$refs.searchz.value}`)
+                    .then(response => {
+                    this.todos = response.data
+                    })
+                    .catch(error => {
+                    console.error('Error fetching todos:', error);
+                    });
 
             },
             change_status(id){
@@ -226,13 +206,12 @@
             cross_out(todo){
                
             },
-    
+          
     
         },
         mounted(){
            this.get_user_username()
            console.log("MOUNT LOOPED")
-
 
         }
     }

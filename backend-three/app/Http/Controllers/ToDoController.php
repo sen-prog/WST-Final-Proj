@@ -14,22 +14,7 @@ class ToDoController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request){
-
-        // $todo = ToDo::find($id);
-        // return "what";
-
-        // if($todo){
-        //     $todos = Todo::where('user_id', $id)->get();
-            
-        //     return response()->json([$todos]);
-        // }else{
-        //     return response()->json(['message' => 'To do not found.'], 404);
-        // }
-
-       
-
-    
-        
+ 
     }
     /**
      * Show the form for creating a new resource.
@@ -65,16 +50,6 @@ class ToDoController extends Controller
     public function show(ToDo $toDo, $id)
     {
 
-        $todo = User::find($id);
-        
-
-        if($todo){
-            $todos = Todo::where('user_id', $id)->get();
-            
-            return response()->json([$todos]);
-        }else{
-            return response()->json(['message' => 'To do not found.'], 404);
-        }
         
     }
 
@@ -139,6 +114,16 @@ class ToDoController extends Controller
         }
         
         
+    }
+
+
+    public function get_search(Request $request){
+
+        $search = $request->input();
+
+        $result = Todo::where('user_id', $search['user_id'])->where('to_do', 'like', '%' .  $search["search"] . '%')->get();
+        return response()->json($result);
+      
     }
     
 }
