@@ -27,7 +27,7 @@
             </div>
             
 
-          
+         
 
            
             <div class="update_modal" v-if="ModalOpen">
