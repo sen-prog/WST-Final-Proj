@@ -6,26 +6,42 @@
 
         </div> -->
         
-        <div class = "search_box">
-        <textarea ref = "searchz"> </textarea>
-        <button v-on:click="get_all_todos">Search </button>
-        </div>
-       
-            
-        <div class = "type_box">
-            <textarea ref = "todo"> </textarea>  
-            <button v-on:click=" post_func"> ADD </button>
-        
-        </div>
-        
-        <div class = "update_modal" v-if="ModalOpen">
-            <h4 >  {{modal_todo}}   </h4>
-            <textarea class = "modal field" ref = "newtodo" > </textarea> 
-            <button v-on:click="update_func"> UPDATE </button>
-            <button v-on:click="modal_func()"> CANCEL </button>
+        <div class="guide">
+            <div class="search_box mt-3 w-100">
+                <div class="input-group mb-3">
+                    <input type="text" ref="searchz" class="form-control" placeholder="Search...">
+                    <button class="btn btn-secondary" id="search" type="button" v-on:click="get_all_todos">Search</button>
+                </div>
+            </div>
 
+        
+                
+            <div class = "type_box mt-3 w-100">
+                <!-- <input type="type" ref = "todo"> </input>  
+                <button v-on:click=" post_func"> ADD </button>
+                <button class="btn btn-primary">Submit</button> -->
+                <div class="input-group mb-3">
+                 <input type="text" class="form-control" ref="todo" placeholder="Enter to-do item">
+                 <button class="btn btn-dark" id="add" type="button" v-on:click="post_func">Add Task</button>
+                </div>
+            </div>
+            
+
+          
+
+           
+            <div class="update_modal" v-if="ModalOpen">
+                <h4>{{ modal_todo }}</h4>
+                <form @submit.prevent="update_func" class="mt-3 w-100" id="updateForm">
+                    <input type="text" class="form-control mb-3" ref="newtodo">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-dark me-2" @click="update_func">Update</button>
+                        <button type="button" class="btn btn-secondary" @click="modal_func">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    
+
         <div class="designBox">
             <div class="inviBox">
                 <div class = "task_box">
@@ -121,6 +137,7 @@
                 
             },
             update_func(){
+                // console.log(this.$refs.newtodo.value)
                 this.modal_func()
                 axios.patch(`http://127.0.0.1:8000/api/todos/${this.update_id}`, {to_do: this.$refs.newtodo.value})
                 .then(response => {
@@ -243,21 +260,33 @@
         }
     }
     </script>
-    
-    
+
     <style scoped>
     .designBox{
         background-color:#e5e4db;
-        height: 600px;
+        height: 524px;
+        width: 524px;
         border-radius: 15px;
         padding: 12px;
     }
 
+    .guide {
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: none;
+    /* border: 1px solid red; */
+    height: auto;
+    width: 524px;
+    }
+
     .inviBox{
         background-color:#e5e4db;
-        height: 575px;
+        height: 500px;
         border-radius: 15px;
         overflow-y: auto;
+        overflow-X: hidden;
     }
 
     /* .TODOLIST{
@@ -271,9 +300,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        
-        
-    
+        padding: 0;
     }
     p{
          word-wrap: break-word;
@@ -306,7 +333,8 @@
 
 
     .update_modal{
-        border: solid black;
+        border: 1px solid gray;
+        border-radius: 10px;
         background: white;
         height: 300px;
         width: 550px;
@@ -315,11 +343,12 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        padding: 30px;
     }
 
     .crossed {
         text-decoration: line-through;
-        color: red;
+        color: rgb(150, 60, 60);
     }
 
     .box_done{
@@ -354,8 +383,23 @@
         color: #a0a099;
     }
 
+    #add:hover{
+        background-color: white !important;
+        color: black !important;
+    }
+
     .update:hover{
         color: #02367b;
+    }
+
+    .form-control{
+        box-shadow: none !important;
+        border: 1px solid #cecdc5 !important;
+    }
+
+    .form-control:focus{
+        box-shadow: none !important;
+        border: 1px solid #73726e !important;
     }
 
     .undo{
@@ -368,21 +412,32 @@
         color: #2e2e2c;
     }
 
+    .type_box{
+        width: auto;
+    }
+
+    #search{
+        width: 89px;
+    }
+
     ::-webkit-scrollbar {
-        width: 10px;
+        width: 0px;   
     }
 
     ::-webkit-scrollbar-track {
-        background: #e5e4db;
-        border-radius: 10px;
+        /* background: #e5e4db;
+        border-radius: 10px; */
+        background: none;     
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #cecdc5;
-        border-radius: 10px;
+        /* background: #cecdc5;
+        border-radius: 10px; */
+        background: none; 
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #b7b6af;
+        /* background: #b7b6af; */
+        background: none; 
 }
     </style>

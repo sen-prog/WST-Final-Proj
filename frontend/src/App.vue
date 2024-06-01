@@ -1,5 +1,7 @@
 <template>
+  
 <div>
+  
   <div v-if="myStore.isLoggedIn">
     <Header @my_event="logout" :user_display="user_dis"/>
   </div>
